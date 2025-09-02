@@ -6,7 +6,7 @@ on:
       - master   # or your default branch
 
 jobs:
-  build-and-deploy:
+  build-and-push-docker-image:
     runs-on: ubuntu-latest
 
     steps:
@@ -46,6 +46,10 @@ jobs:
         run: |
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/portfolio-client:latest
 
+  ssh-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
       # 6️⃣ SSH into droplet and update k3s deployment
       - name: Deploy to k3s
         uses: appleboy/ssh-action@v0.1.6
