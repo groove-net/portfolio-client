@@ -5,7 +5,7 @@ FROM nginx:alpine
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy built Angular files
-COPY dist/<your-app-name>/ /usr/share/nginx/html/
+COPY dist/portfolio/ /usr/share/nginx/html/
 
 # Expose port 80
 EXPOSE 80
