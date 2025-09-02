@@ -6,7 +6,7 @@ on:
       - master   # or your default branch
 
 jobs:
-  build-and-push-docker-image:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
