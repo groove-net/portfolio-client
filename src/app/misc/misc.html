@@ -1,0 +1,8 @@
+<section class="w-full max-w-3xl mb-16">
+  <h2 class="text-lg uppercase border-b border-gray-600 pb-2 mb-6">> MISC</h2>
+  <article class="space-y-6 text-gray-300 leading-relaxed">
+    @if(miscAsHtml != null){
+      <div [innerHTML]="miscAsHtml.html" class="markdown"></div>
+    }
+  </article>
+</section>

@@ -1,0 +1,11 @@
+<!-- NAVIGATION -->
+<nav class="flex justify-center space-x-6 mb-12 text-xs md:text-sm uppercase">
+  @for (item of items; track item.label) {
+    <a class="nav-link"
+      [routerLink]="item.route"
+      routerLinkActive="px-1 bg-[#00ff66] text-black">
+      {{ item.label }}
+    </a>
+  }
+  <a class="nav-link" href="https://github.com/groove-net">> GitHub</a>
+</nav>

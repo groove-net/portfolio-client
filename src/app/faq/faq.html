@@ -1,0 +1,25 @@
+<section class="w-full max-w-3xl mb-16">
+  <h2 class="text-lg uppercase border-b border-gray-600 pb-2 mb-6">> FAQ</h2>
+  <p class="leading-relaxed mb-6">
+    This page is a collection of some of the most asked questions by
+    interviwers and peers who got in touch with me, and my answers to them.
+  </p>
+
+  @if ( globalData != null ){
+    <!-- Big Image -->
+    <div class="mb-6">
+      <img [src]="globalData.faq.image"
+           alt="Contact Image"
+           class="w-full h-50 object-cover grayscale"/>
+
+    </div>
+    @for ( qna of globalData.faq.qna; track qna.q ){
+      <div>
+      <h3 class="text-md text-gray-500 uppercase font-bold">{{ qna.q }}</h3>
+        <p class="leading-relaxed mb-6">
+          {{ qna.a }}
+        </p>
+      </div>
+    }
+  }
+</section>

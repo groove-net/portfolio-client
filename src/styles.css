@@ -1,1 +1,51 @@
 /* You can add global styles to this file, and also import other style files */
+/* Tailwind CSS */
+@import "tailwindcss";
+
+/* Retro monospace font */
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+body {
+  font-family: 'Share Tech Mono', monospace;
+  height: auto;          /* or remove height */
+  overflow-y: auto;      /* enable vertical scroll */
+}
+
+.markdown h1 {
+  @apply text-3xl font-bold text-white mb-4;
+}
+
+.markdown h2 {
+  @apply text-2xl font-semibold text-gray-100 mt-8 mb-3;
+}
+
+.markdown h3 {
+  @apply text-xl font-semibold text-gray-200 mt-6 mb-2;
+}
+
+.markdown p {
+  @apply mb-4 text-gray-300;
+}
+
+.markdown ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.markdown ol {
+  @apply list-decimal pl-6 mb-4;
+}
+
+.markdown blockquote {
+  @apply border-l-4 border-gray-600 pl-4 italic text-gray-400 my-4;
+}
+
+.markdown pre {
+  @apply bg-gray-900 rounded-lg p-4 overflow-x-auto mb-4;
+}
+
+.markdown code {
+  @apply text-green-400 px-1 py-0.5 rounded font-mono text-sm;
+}
+
+.markdown a {
+  @apply text-green-400 underline hover:text-green-300;
+}

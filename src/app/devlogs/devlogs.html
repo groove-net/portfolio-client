@@ -1,0 +1,74 @@
+<div class="w-screen h-screen bg-black text-gray-200 flex flex-col">
+  <!-- Overall Heading -->
+  <header class="w-full border-b border-gray-700 p-4 flex items-center sticky top-0 bg-black z-10">
+    <!-- Back Button -->
+    <button
+      class="text-xs sm:text-sm uppercase text-gray-400 cursor-pointer hover:text-white flex items-center gap-2"
+      [routerLink]="'/projects'">
+      <svg xmlns="http://www.w3.org/2000/svg"
+           fill="none"
+           viewBox="0 0 26 26"
+           stroke-width="2"
+           stroke="currentColor"
+           class="w-4 h-4 sm:w-5 sm:h-5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+      </svg>
+      Projects
+    </button>
+
+    <p class="text-sm sm:text-md text-gray-400 ml-auto md:mx-auto ">
+      {{ projectTitle.length > 25 ? (projectTitle | slice:0:25) + "..." : projectTitle }}
+    </p>
+  </header>
+
+  @if (loading) {
+    <div class="flex px-2 py-1 text-sm tracking-wide uppercase bg-black/70 border border-gray-700 text-gray-300">
+      <div class="w-5 h-5 mx-2 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+      <span>Fetching Devlogs...</span>
+    </div>
+  }
+  @else {
+    <!-- Main Body -->
+    <div class="flex flex-1 min-h-0">
+
+      <!-- LEFT SIDE (Desktop/Tablet Only) -->
+      <aside class="hidden md:block w-1/4 border-r border-gray-700 overflow-y-auto">
+        <ul>
+          @for(devlog of devlogs; track devlog.name) {
+            <li (click)="selectDevlog(devlog)"
+                [class.bg-gray-800]="devlog.name === selectedDevlog?.name"
+                class="p-4 cursor-pointer hover:bg-gray-900 transition border-b border-gray-800">
+              <p class="text-white">{{ devlog.name }}</p>
+              <p class="text-xs text-gray-500">{{ devlog.lastModified | date: 'MMMM d, y' }}</p>
+            </li>
+          }
+        </ul>
+      </aside>
+
+      <!-- RIGHT SIDE -->
+      <main class="flex-1 p-4 md:p-8 overflow-y-auto">
+        <!-- DROPDOWN for mobile -->
+        <div class="md:hidden mb-4">
+          <select
+            class="w-full p-2 bg-gray-900 border border-gray-700 rounded text-gray-200"
+            (change)="onDevlogChange($event)">
+            @for(devlog of devlogs; track devlog.name) {
+              <option [selected]="devlog.name === selectedDevlog?.name">
+                {{ devlog.name }}
+              </option>
+            }
+          </select>
+        </div>
+
+        <article class="space-y-6 text-gray-300 leading-relaxed">
+          <!-- <h1 class="text-2xl font-bold text-white mb-2">{{ selectedDevlog.name }}</h1>
+          @if (selectedDevlog.lastModified != undefined) {
+            <p class="text-sm text-gray-500 mb-6">{{ selectedDevlog.lastModified }}</p>
+          } -->
+          <div [innerHTML]="selectedDevlog.contentAsHtml" class="markdown"></div>
+        </article>
+      </main>
+    </div>
+  }
+</div>
+

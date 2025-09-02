@@ -1,0 +1,27 @@
+/* Underline effect on nav links */
+.nav-link {
+  position: relative;
+  padding: 0 0.25rem; /* little breathing room */
+}
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 1px; /* underline thickness */
+  width: 100%;
+  background-color: #00ff66; /* neon green underline */
+  transition: none;
+  z-index: -1; /* sit behind text */
+}
+.nav-link:hover::after {
+  height: 100%; /* expands from underline to full background */
+}
+.nav-link:hover {
+  color: black; /* readable when background grows */
+}
+.active {
+  padding: 0 0.25rem; /* little breathing room */
+  background-color: #00ff66;
+  color: black; /* readable when background grows */
+}

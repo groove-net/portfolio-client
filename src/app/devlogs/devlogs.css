@@ -1,0 +1,10 @@
+/* Scrollbar styling for the devlog list */
+aside::-webkit-scrollbar {
+  width: 6px;
+}
+aside::-webkit-scrollbar-thumb {
+  background: #444;
+}
+aside::-webkit-scrollbar-track {
+  background: #111;
+}

@@ -1,0 +1,10 @@
+  /* Blinking cursor for retro feel */
+  .cursor::after {
+    content: "█";
+    color: #00ff66; /* neon green */
+    text-shadow: 0 0 5px #00ff66, 0 0 10px #00ff66;
+    animation: blink 1s infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }

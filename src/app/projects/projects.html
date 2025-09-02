@@ -1,0 +1,90 @@
+<!-- PROJECTS -->
+<section class="w-full max-w-3xl mb-16">
+  <h2 class="text-lg uppercase border-b border-gray-600 pb-2 mb-6">> Projects</h2>
+  <p class="leading-relaxed mb-6">
+    An overview of all noteworthy projects that I was either working on
+    before or I'm currently working on, including technical details and
+    insights.
+  </p>
+  @if (loading === true){
+    <div class="flex px-2 py-1 text-sm tracking-wide uppercase bg-black/70 border border-gray-700 text-gray-300">
+      <div class="w-5 h-5 mx-2 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
+      <span>Fetching data from GitHub...</span>
+    </div>
+  }
+  @else if(projects.length === 0){
+    <div class="flex px-2 py-1 text-sm tracking-wide uppercase bg-black/70 border border-gray-700 text-gray-300">
+      There are no projects at the moment
+    </div>
+  }
+  @else{
+    <div class="grid grid-cols-1 gap-8">
+      <!-- Project cards will be injected here -->
+      @for (project of projects; track project.name) {
+        <div class="border border-gray-700 hover:bg-gray-900 transition p-4 flex flex-col">
+          <div class="relative overflow-hidden mb-3">
+            <img [src]="project.imgSrc"
+                 [alt]="project.name"
+                 class="w-full h-48 object-cover grayscale hover:scale-105 transition-transform duration-500">
+            <!-- Visibility badge -->
+            <span [ngClass]="{
+              'bg-green-700/80 border-green-500 text-green-200': project.visibility === 'PUBLIC',
+              'bg-red-700/80 border-red-500 text-red-200': project.visibility === 'PRIVATE'
+            }"
+            class="absolute top-2 right-2 px-2 py-0.5 text-xs font-medium rounded-full">
+              {{ project.visibility }} REPO
+            </span>
+          </div>
+
+          <h3 class="text-white font-bold mb-2">{{ project.name }}</h3>
+          @if (project.description){
+            <p class="text-sm text-gray-400 mb-2">{{ project.description }}</p>
+          }
+          @else{
+            <p class="text-sm text-gray-400 mb-2">🙊 Oops...Looks like I haven't written a description for this repository</p>
+          }
+          <p class="text-xs text-gray-500 mb-1">Last Commit: {{ project.pushedAt }}</p>
+          <p class="text-xs text-gray-500 mb-2">Languages: {{ project.languages.join(', ') }}</p>
+
+          <div class="flex flex-wrap gap-2 mb-4">
+            @for (topic of project.repositoryTopics; track topic) {
+              <span class="px-2 py-0.5 text-xs rounded-full border border-gray-500 text-gray-400 hover:border-gray-400 hover:text-gray-200 transition">
+                {{ topic }}
+              </span>
+            }
+          </div>
+
+          <div class="flex space-x-4">
+            <a [routerLink]="'/projects/'+project.name"
+              class="px-3 py-1 text-xs uppercase border border-gray-500 hover:border-[#00ff66] hover:text-[#00ff66] flex items-center gap-1 transition">
+              📄 Read Devlogs
+            </a>
+
+            @if (project.visibility === "PUBLIC"){
+              <a [href]="'https://github.dev'+project.resourcePath"
+                 class="px-3 py-1 text-xs uppercase border border-gray-500 hover:border-[#00ff66] hover:text-[#00ff66] flex items-center gap-1 transition">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     class="w-4 h-4"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke="#00ff66"
+                     stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+                </svg>
+                View Code
+              </a>
+            }
+
+            @if (project.homepageUrl){
+              <a [href]="project.homepageUrl" target="_blank" rel="noopener noreferrer"
+                 class="px-3 py-1 text-xs uppercase border border-gray-500 hover:border-[#00ff66] hover:text-[#00ff66] flex items-center gap-1 transition">
+                🚀 Live Demo
+              </a>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</section>
