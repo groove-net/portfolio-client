@@ -50,8 +50,8 @@ export class GlobalDataService {
   init(): Promise<void> {
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.http.get<Payload>('http://10.43.165.186:8080/api/portfoliodata').toPromise(),
-        this.http.get<Payload>('http://10.43.165.186:8080/api/miscmd').toPromise()
+        this.http.get<Payload>('http://104.236.49.63:31003/api/portfoliodata').toPromise(),
+        this.http.get<Payload>('http://104.236.49.63:31003/api/miscmd').toPromise()
       ])
         .then(async ([portfolio, misc]) => {
           this.dataSubject.next(JSON.parse(portfolio!.content));
