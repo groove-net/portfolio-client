@@ -35,7 +35,7 @@ export class Devlogs {
 
   async getDevlogs() {
     this.http
-      .get<Devlog[]>('http://10.43.10.112:8080/api/devlogs/'+this.route.snapshot.paramMap.get('title'), {})
+      .get<Devlog[]>('http://10.43.165.186:8080/api/devlogs/'+this.route.snapshot.paramMap.get('title'), {})
       .subscribe(async (response) => {
         this.devlogs = response;
         this.selectedDevlog = this.devlogs[0];

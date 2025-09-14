@@ -22,7 +22,7 @@ export class Projects {
 
   getProjects() {
     this.http
-      .get<Project[]>('http://10.43.10.112:8080/api/projects', {})
+      .get<Project[]>('http://10.43.165.186:8080/api/projects', {})
       .subscribe((response) => {
         this.projects = response;
         // Get all cover imgages for projects
@@ -36,7 +36,7 @@ export class Projects {
 
   getImage( repo: string ) {
     return this.http.get<{ name: string }>(
-      `http://10.43.10.112:8080/api/coverimage/${repo}`
+      `http://10.43.165.186:8080/api/coverimage/${repo}`
     ).pipe(
       map(res => `data:image/jpeg;base64,${res.name}`) // change mime if PNG etc.
     );
