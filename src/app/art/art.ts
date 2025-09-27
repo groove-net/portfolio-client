@@ -20,6 +20,8 @@ export class Art {
   }
 
   ngAfterViewInit() {
-    (window as any).instgrm?.Embeds?.process();
+    if (typeof instgrm !== 'undefined') {
+      instgrm.Embeds.process();
+    }
   }
 }
