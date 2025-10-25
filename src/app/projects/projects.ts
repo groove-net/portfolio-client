@@ -1,42 +1,32 @@
-import { Component, Injectable } from '@angular/core';
-import { Project } from './models/project.dto';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NgClass } from '@angular/common';
-import { map } from 'rxjs/operators';
-import { ApiService } from '../../services/api.service';
+import { CommonModule, NgClass } from '@angular/common';
+import { Observable } from 'rxjs';
+
+import { Project } from './models/project.dto';
+import { ProjectStoreService } from '../../services/project-store.service';
 
 @Component({
   selector: 'app-projects',
-  imports: [RouterLink, NgClass],
+  standalone: true,
+  imports: [CommonModule, RouterLink, NgClass],
   templateUrl: './projects.html',
   styleUrl: './projects.css'
 })
-@Injectable({ providedIn: 'root' })
-export class Projects {
-  loading: boolean = true;
-  projects: Project[] = [];
+export class Projects implements OnInit {
+  loading = true;
+  projects$!: Observable<Project[]>;
 
-  constructor(private apiService: ApiService) {
-    this.getProjects();
-  }
+  constructor(private projectStore: ProjectStoreService) { }
 
-  getProjects() {
-    this.apiService.get<Project[]>('/api/projects')
-      .subscribe((response) => {
-        this.projects = response;
-        // Get all cover imgages for projects
-        this.projects.forEach(project => {
-          this.getImage(project.name).subscribe(src => project.imgSrc = src);
-          console.log(project.imgSrc);
-        });
-        this.loading = false;
-      });
-  }
+  ngOnInit() {
+    // `getProjects()` internally triggers `load()` if not yet fetched
+    this.projects$ = this.projectStore.getProjects();
 
-  getImage(repo: string) {
-    return this.apiService.get<{ name: string }>(`/api/coverimage/${repo}`)
-      .pipe(
-        map(res => `data:image/jpeg;base64,${res.name}`) // change mime if PNG etc.
-      );
+    // Optional: if you want to toggle `loading` when projects load
+    this.projects$.subscribe({
+      next: () => (this.loading = false),
+      error: () => (this.loading = false),
+    });
   }
 }

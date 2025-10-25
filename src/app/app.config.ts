@@ -3,7 +3,7 @@ import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 
 import { routes } from './app.routes';
-import { GlobalDataService } from './shared/data.service';
+import { GlobalDataService } from '../services/data.service';
 
 export function initApp(globalDataService: GlobalDataService) {
   return () => globalDataService.init();

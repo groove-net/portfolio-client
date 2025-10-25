@@ -6,13 +6,15 @@
     before or I'm currently working on, including technical details and
     insights.
   </p>
+
+  @let projects = projects$ | async;
   @if (loading === true){
     <div class="flex px-2 py-1 text-sm tracking-wide uppercase bg-black/70 border border-gray-700 text-gray-300">
       <div class="w-5 h-5 mx-2 border-4 border-green-400 border-t-transparent rounded-full animate-spin"></div>
       <span>Fetching data from GitHub...</span>
     </div>
   }
-  @else if(projects.length === 0){
+  @else if(projects == null || projects.length === 0){
     <div class="flex px-2 py-1 text-sm tracking-wide uppercase bg-black/70 border border-gray-700 text-gray-300">
       There are no projects at the moment
     </div>

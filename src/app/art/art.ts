@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { GlobalDataService } from '../shared/data.service';
+import { GlobalDataService } from '../../services/data.service';
 
 declare var instgrm: any;
 
@@ -13,7 +13,7 @@ declare var instgrm: any;
 export class Art {
   artworks!: string[];
 
-  constructor(private globalDataService: GlobalDataService) {}
+  constructor(private globalDataService: GlobalDataService) { }
 
   ngOnInit() {
     this.artworks = this.globalDataService.data!.art;

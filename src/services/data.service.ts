@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { ApiService } from '../../services/api.service';
+import { ApiService } from './api.service';
 
 export interface Qna {
   q: string,
