@@ -1,21 +1,21 @@
 // global-data.service.ts
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { marked } from 'marked';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { ApiService } from '../../services/api.service';
 
-export interface Qna{
+export interface Qna {
   q: string,
   a: string
 }
 
-export interface Faq{
+export interface Faq {
   image: string,
   qna: Qna[]
 }
 
-export interface Contact{
+export interface Contact {
   image: string
   phone: string,
   email: string,
@@ -24,17 +24,17 @@ export interface Contact{
   discord: string
 }
 
-export interface GlobalData{
+export interface GlobalData {
   art: string[],
   faq: Faq
   contact: Contact
 }
 
-export interface MiscAsHtml{
+export interface MiscAsHtml {
   html: SafeHtml | null
 }
 
-interface Payload{
+interface Payload {
   content: string
 }
 
@@ -45,13 +45,13 @@ export class GlobalDataService {
   data$ = this.dataSubject.asObservable();
   misc$ = this.miscSubject.asObservable();
 
-  constructor(private http: HttpClient, private sanitizer: DomSanitizer) {}
+  constructor(private apiService: ApiService, private sanitizer: DomSanitizer) { }
 
   init(): Promise<void> {
     return new Promise((resolve, reject) => {
       Promise.all([
-        this.http.get<Payload>('http://104.236.49.63:31003/api/portfoliodata').toPromise(),
-        this.http.get<Payload>('http://104.236.49.63:31003/api/miscmd').toPromise()
+        this.apiService.get<Payload>('/api/portfoliodata').toPromise(),
+        this.apiService.get<Payload>('/api/miscmd').toPromise()
       ])
         .then(async ([portfolio, misc]) => {
           this.dataSubject.next(JSON.parse(portfolio!.content));

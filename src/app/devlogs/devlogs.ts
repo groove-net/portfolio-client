@@ -1,10 +1,10 @@
 import { Component, Injectable } from '@angular/core';
 import { Devlog } from './models/devlog.dto';
 import { RouterLink, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { marked } from 'marked';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SlicePipe, DatePipe } from '@angular/common';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-devlogs',
@@ -12,14 +12,14 @@ import { SlicePipe, DatePipe } from '@angular/common';
   templateUrl: './devlogs.html',
   styleUrl: './devlogs.css'
 })
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class Devlogs {
   loading: boolean = true;
-  projectTitle! : string;
+  projectTitle!: string;
   devlogs: Devlog[] = [];
   selectedDevlog!: Devlog;
 
-  constructor (private http: HttpClient, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private sanitizer: DomSanitizer) {
     this.getDevlogs();
   }
 
@@ -34,8 +34,8 @@ export class Devlogs {
   }
 
   async getDevlogs() {
-    this.http
-      .get<Devlog[]>('http://104.236.49.63:31003/api/devlogs/'+this.route.snapshot.paramMap.get('title'), {})
+    this.apiService
+      .get<Devlog[]>('/api/devlogs/' + this.route.snapshot.paramMap.get('title'))
       .subscribe(async (response) => {
         this.devlogs = response;
         this.selectedDevlog = this.devlogs[0];

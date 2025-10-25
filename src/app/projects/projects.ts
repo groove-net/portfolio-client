@@ -1,9 +1,9 @@
 import { Component, Injectable } from '@angular/core';
 import { Project } from './models/project.dto';
 import { RouterLink } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
 import { NgClass } from '@angular/common';
 import { map } from 'rxjs/operators';
+import { ApiService } from '../../services/api.service';
 
 @Component({
   selector: 'app-projects',
@@ -11,18 +11,17 @@ import { map } from 'rxjs/operators';
   templateUrl: './projects.html',
   styleUrl: './projects.css'
 })
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class Projects {
   loading: boolean = true;
   projects: Project[] = [];
 
-  constructor(private http: HttpClient) {
+  constructor(private apiService: ApiService) {
     this.getProjects();
   }
 
   getProjects() {
-    this.http
-      .get<Project[]>('http://104.236.49.63:31003/api/projects', {})
+    this.apiService.get<Project[]>('/api/projects')
       .subscribe((response) => {
         this.projects = response;
         // Get all cover imgages for projects
@@ -31,14 +30,13 @@ export class Projects {
           console.log(project.imgSrc);
         });
         this.loading = false;
-      })
+      });
   }
 
-  getImage( repo: string ) {
-    return this.http.get<{ name: string }>(
-      `http://104.236.49.63:31003/api/coverimage/${repo}`
-    ).pipe(
-      map(res => `data:image/jpeg;base64,${res.name}`) // change mime if PNG etc.
-    );
+  getImage(repo: string) {
+    return this.apiService.get<{ name: string }>(`/api/coverimage/${repo}`)
+      .pipe(
+        map(res => `data:image/jpeg;base64,${res.name}`) // change mime if PNG etc.
+      );
   }
 }
