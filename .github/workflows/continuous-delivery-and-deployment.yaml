@@ -58,6 +58,8 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # Set new image and force the deployment to restart/update since we are resuing the same latest tag
           script: |
             kubectl set image deployment/portfolio-client portfolio-client=${{ secrets.DOCKERHUB_USERNAME }}/portfolio-client:latest -n default
+            kubectl rollout restart deployment kubernetes-bootcamp -n default
             kubectl rollout status deployment/portfolio-client -n default
