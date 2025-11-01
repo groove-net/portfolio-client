@@ -6,7 +6,7 @@ import { routes } from './app.routes';
 import { GlobalDataService } from '../services/data.service';
 
 export function initApp(globalDataService: GlobalDataService) {
-  globalDataService.init();
+  return () => globalDataService.init();
 }
 
 export const appConfig: ApplicationConfig = {
